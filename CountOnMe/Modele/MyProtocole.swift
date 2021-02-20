@@ -10,4 +10,5 @@ import Foundation
 
 protocol MyProtocole {
     func getResult(result : String)
+    func showAlert(message : String)
 }

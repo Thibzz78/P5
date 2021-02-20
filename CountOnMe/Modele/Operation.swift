@@ -35,25 +35,60 @@ class Operation {
         return calculText.firstIndex(of: "=") != nil
     }
 
-    
+    // récupération du chiffre
     func getNumber(numberText : String){
         if expressionHaveResult{
             calculText = ""
         }
         calculText.append(numberText)
+        protocole?.getResult(result: calculText)
     }
     
-    func getOperator(operatorr : String) -> Bool{
+    // récupération de l'opérateur
+    func getOperator(operatorr : String){
         if canAddOperator{
             calculText.append(operatorr)
-            return true
         }
-        return false
+        else{
+            protocole?.showAlert(message: "un operateur est déjà mis !")
+        }
+        protocole?.getResult(result: calculText)
     }
     
-    
-    
-    
+    func getResult(){
+        guard expressionIsCorrect else {
+            protocole?.showAlert(message: "Entrez une expression correcte !")
+            return
+        }
+        
+        guard expressionHaveEnoughElement else {
+            protocole?.showAlert(message: "Entrez une expression correcte !")
+            return
+        }
+        
+        // Create local copy of operations
+        var operationsToReduce = elements
+        
+        // Iterate over operations while an operand still here
+        while operationsToReduce.count > 1 {
+            let left = Double(operationsToReduce[0])!
+            let operand = operationsToReduce[1]
+            let right = Double(operationsToReduce[2])!
+            
+            let result: Double
+            switch operand {
+            case "+": result = left + right
+            case "-": result = left - right
+            case "/": result = left / right
+            case "*": result = left * right
+            default: fatalError("Unknown operator !")
+            }
+            
+            operationsToReduce = Array(operationsToReduce.dropFirst(3))
+            operationsToReduce.insert("\(result)", at: 0)
+        }
+        protocole?.getResult(result: calculText)
+    }
 }
 
 // fonction qui recupere le nombre sur lequel on a cliqué.
@@ -130,11 +165,3 @@ class Operation {
  getResult(Result : String)
  
  */
-
-
-
-
-
-// PAS DE LOGIQUE SUR LE VIEWCONTROLLER (RECUPERE LES ACTIONS DU STORYBOARD ET RENVOIE AU MODELE ET LE MODELE S'OCCUPE DE LA LOGIQUE ET RENVOIE LE RESULTAT AU CONTROLLER ET LE CONTROLLER L'AFFICHE AU STORYBOARD)
-
-// LE CONTROLLER NE FAIT PAS DE LOGIQUE !!!!!
