@@ -36,19 +36,19 @@ class ViewController: UIViewController, MyProtocole {
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        calcul.getOperator(operatorr: "+")
+        calcul.getOperator(operatorr: " + ")
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        calcul.getOperator(operatorr: "-")
+        calcul.getOperator(operatorr: " - ")
     }
 
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
-        calcul.getOperator(operatorr: "/")
+        calcul.getOperator(operatorr: " / ")
     }
     
     @IBAction func tappedMultiplierButton(_ sender: UIButton) {
-        calcul.getOperator(operatorr: "*")
+        calcul.getOperator(operatorr: " * ")
     }
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {

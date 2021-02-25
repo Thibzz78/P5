@@ -16,6 +16,7 @@ class Operation {
     
     var elements: [String] {
         return calculText.split(separator: " ").map { "\($0)" }
+        // ????????????????????????????????????????????????????
     }
 
     // Error check computed variables
@@ -41,6 +42,7 @@ class Operation {
             calculText = ""
         }
         calculText.append(numberText)
+        print(numberText)
         protocole?.getResult(result: calculText)
     }
     
@@ -48,6 +50,7 @@ class Operation {
     func getOperator(operatorr : String){
         if canAddOperator{
             calculText.append(operatorr)
+            print(operatorr)
         }
         else{
             protocole?.showAlert(message: "un operateur est déjà mis !")
@@ -60,7 +63,7 @@ class Operation {
             protocole?.showAlert(message: "Entrez une expression correcte !")
             return
         }
-        
+        print(elements.count)
         guard expressionHaveEnoughElement else {
             protocole?.showAlert(message: "Entrez une expression correcte !")
             return
@@ -69,11 +72,24 @@ class Operation {
         // Create local copy of operations
         var operationsToReduce = elements
         
+        func priorityCalcul(list : [String]) -> Bool{
+            return list.contains("/") || list.contains("*")
+        }
+        
         // Iterate over operations while an operand still here
+        var i = 0
         while operationsToReduce.count > 1 {
-            let left = Double(operationsToReduce[0])!
-            let operand = operationsToReduce[1]
-            let right = Double(operationsToReduce[2])!
+            let left = Double(operationsToReduce[i])!
+            let operand = operationsToReduce[i+1]
+            let right = Double(operationsToReduce[i+2])!
+        
+            
+            if priorityCalcul(list: operationsToReduce){
+                if operand != "/" && operand != "*"{
+                    i += 2
+                    continue
+                }
+            }
             
             let result: Double
             switch operand {
@@ -84,9 +100,14 @@ class Operation {
             default: fatalError("Unknown operator !")
             }
             
-            operationsToReduce = Array(operationsToReduce.dropFirst(3))
-            operationsToReduce.insert("\(result)", at: 0)
+            operationsToReduce.remove(at: i)
+            operationsToReduce.remove(at: i)
+            operationsToReduce.remove(at: i)
+            operationsToReduce.insert("\(result)", at: i)
+                                     
+            i = 0
         }
+        print(operationsToReduce)
         protocole?.getResult(result: calculText)
     }
 }
