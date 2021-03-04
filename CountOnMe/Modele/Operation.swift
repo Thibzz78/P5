@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Operation {
+class OperationModel {
     
     var protocole : MyProtocole?
     
@@ -16,7 +16,6 @@ class Operation {
     
     var elements: [String] {
         return calculText.split(separator: " ").map { "\($0)" }
-        // ????????????????????????????????????????????????????
     }
 
     // Error check computed variables
@@ -35,6 +34,11 @@ class Operation {
     var expressionHaveResult: Bool {
         return calculText.firstIndex(of: "=") != nil
     }
+    
+    func reset(){
+        calculText = ""
+        protocole?.getResult(result: calculText)
+    }
 
     // récupération du chiffre
     func getNumber(numberText : String){
@@ -42,7 +46,6 @@ class Operation {
             calculText = ""
         }
         calculText.append(numberText)
-        print(numberText)
         protocole?.getResult(result: calculText)
     }
     
@@ -50,7 +53,6 @@ class Operation {
     func getOperator(operatorr : String){
         if canAddOperator{
             calculText.append(operatorr)
-            print(operatorr)
         }
         else{
             protocole?.showAlert(message: "un operateur est déjà mis !")
@@ -107,82 +109,7 @@ class Operation {
                                      
             i = 0
         }
-        print(operationsToReduce)
-        protocole?.getResult(result: calculText)
+        calculText.append(" = \(operationsToReduce[i])")
+        protocole?.getResult(result: calculText.replacingOccurrences(of: ".0", with: ""))
     }
 }
-
-// fonction qui recupere le nombre sur lequel on a cliqué.
-// parametre : String --> IBAction
-/* func getNumber(numberText : String){
- 
- recupere le nombre et je l'ajoute a la chaine de String.
- (Tableau de string)
- }
- 
- dans la func
- tappedNumberButton(){
- 
- calcul.getNumber(numberText)
- 
- }
-
-*/
-
-
-
-
-
-
-// fonction qui recupere l'opérateur sur lequel on a cliqué.
-/* func getOperator(operator : String){}
- 
- dans la func
- tappedAdditionButton,
- tappedSubstractionButton,
- tappedMultiplierButton,
- tappedDivisionButton(){
- 
- calcul.getOperator(operator){
- check condition
- ajout de l'opérateur a la chaine de String
- }
-
-*/
-
-
-
-
-
-
-/* fonction calcul appellé quand on clique sur égal.
-
- tappedEqualButton(){
- 
- calcul.getEqual()
- }
- 
- 
- func getEqual(){
- ordre de priorité
- calcul de la somme
- protocole.getResult(result)
- }
- 
- */
-
-
-
-
-/*
- Nouveau fichier MyProtocole
- 
- 
- 
- crée un protocole (myResult)
- 
- déclarer une fonction (getResult)
- 
- getResult(Result : String)
- 
- */

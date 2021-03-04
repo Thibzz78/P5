@@ -180,6 +180,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="tappedNumberButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="cYr-jK-RIv"/>
+                                                    <action selector="tappedResetButton:" destination="eqK-jh-KKu" eventType="touchUpInside" id="pqv-mp-8OI"/>
                                                 </connections>
                                             </button>
                                         </subviews>

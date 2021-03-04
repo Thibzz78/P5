@@ -18,13 +18,14 @@ class ViewController: UIViewController, MyProtocole {
         erreurSimple(message: message)
     }
     
-    var calcul = Operation()
+    var calcul = OperationModel()
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        calcul.protocole = self
     }
 
     
@@ -54,5 +55,9 @@ class ViewController: UIViewController, MyProtocole {
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         calcul.getResult()
     }
-
+    
+    @IBAction func tappedResetButton(_ sender: Any) {
+        calcul.reset()
+    }
+    
 }
