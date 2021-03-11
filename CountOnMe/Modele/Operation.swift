@@ -35,6 +35,10 @@ class OperationModel {
         return calculText.firstIndex(of: "=") != nil
     }
     
+    var expressionNotDivisionZero: Bool {
+        return calculText.contains(" / 0")
+    }
+    
     func reset(){
         calculText = ""
         protocole?.getResult(result: calculText)
@@ -68,6 +72,10 @@ class OperationModel {
         print(elements.count)
         guard expressionHaveEnoughElement else {
             protocole?.showAlert(message: "Entrez une expression correcte !")
+            return
+        }
+        guard !expressionNotDivisionZero else {
+            protocole?.showAlert(message: "Entrez une expression correct !")
             return
         }
         
